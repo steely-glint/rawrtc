@@ -839,6 +839,7 @@ struct rawrtc_peer_connection_description {
  * TODO: private
  */
 struct rawrtc_peer_connection_context {
+    struct rawrtc_ice_gather_options* gather_options;
     struct rawrtc_ice_gatherer* ice_gatherer;
     struct rawrtc_ice_transport* ice_transport;
     struct list certificates;
@@ -855,7 +856,7 @@ struct rawrtc_peer_connection {
     uint_fast8_t local_flags;
     uint_fast8_t remote_flags;
     enum rawrtc_peer_connection_state connection_state;
-    struct rawrtc_ice_gather_options* gather_options;
+    struct rawrtc_peer_connection_configuration* configuration;
     rawrtc_peer_connection_state_change_handler* connection_state_change_handler;
     enum rawrtc_data_transport_type data_transport_type;
     struct sdp_session* sdp_session;
@@ -1713,6 +1714,18 @@ char const * const rawrtc_peer_connection_state_to_name(
 enum rawrtc_code rawrtc_peer_connection_configuration_create(
     struct rawrtc_peer_connection_configuration** const configurationp, // de-referenced
     enum rawrtc_ice_gather_policy const gather_policy
+);
+
+/*
+ * Add an ICE server to the peer connection configuration.
+ */
+enum rawrtc_code rawrtc_peer_connection_configuration_add_server(
+    struct rawrtc_peer_connection_configuration* const configuration,
+    char* const * const urls, // copied
+    size_t const n_urls,
+    char* const username, // nullable, copied
+    char* const credential, // nullable, copied
+    enum rawrtc_ice_credential_type const credential_type
 );
 
 /*
