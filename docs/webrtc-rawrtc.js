@@ -28,9 +28,12 @@ class Peer {
 
         // Create peer connection
         var pc = new RTCPeerConnection({
-            iceServers: [{
-                urls: 'stun:stun.l.google.com:19302'
-            }]
+            iceServers: [
+            {urls: "stun:146.148.121.175:3478"},
+            {urls: "turn:146.148.121.175:3478?transport=udp", 'credential': 'nexus5x', 'username': 'smartphone'},
+            //{url: "turn:146.148.121.175:3478?transport=tcp", 'credential': 'nexus5x', 'username': 'smartphone'},
+            {url: "turn:146.148.121.175:443?transport=tcp", 'credential': 'nexus5x', 'username': 'smartphone'}
+        ]
         });
 
         // Bind peer connection events
